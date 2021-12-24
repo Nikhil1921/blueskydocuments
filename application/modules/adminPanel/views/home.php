@@ -1,5 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <div class="row">
+    <?php if(access()): ?>
     <div class="col-md-3" onclick="window.location.href = '<?= base_url(admin('users')) ?>'">
         <div class="card">
             <div class="card-body">
@@ -17,6 +18,7 @@
             </div>
         </div>
     </div>
+    <?php endif ?>
     <div class="col-md-3" onclick="window.location.href = '<?= base_url(admin('folders')) ?>'">
         <div class="card">
             <div class="card-body">

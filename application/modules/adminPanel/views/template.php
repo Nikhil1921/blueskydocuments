@@ -66,7 +66,9 @@
                         <ul class="sidebar-menu">
                             <li><a class="sidebar-header <?= $name == 'dashboard' ? 'active' : '' ?>" href="<?= base_url(admin()) ?>"><i data-feather="home"></i><span> Dashboard</span></a></li>
                             <li><a class="sidebar-header <?= $name == 'folders' ? 'active' : '' ?>" href="<?= base_url(admin('folders')) ?>"><i data-feather="list"></i><span> Folders</span></a></li>
+                            <?php if(access()): ?>
                             <li><a class="sidebar-header <?= $name == 'users' ? 'active' : '' ?>" href="<?= base_url(admin('users')) ?>"><i data-feather="users"></i><span> Users</span></a></li>
+                            <?php endif ?>
                         </ul>
                     </div>
                 </div>

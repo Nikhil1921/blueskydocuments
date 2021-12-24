@@ -9,6 +9,7 @@ class Users extends Admin_controller  {
 	
 	public function index()
 	{
+        check_access();
 		$data['title'] = $this->title;
         $data['name'] = $this->name;
         $data['url'] = $this->redirect;
@@ -58,6 +59,7 @@ class Users extends Admin_controller  {
 
     public function add()
 	{
+        check_access();
         $this->form_validation->set_rules($this->validate);
 
         if ($this->form_validation->run() == FALSE)
@@ -84,6 +86,7 @@ class Users extends Admin_controller  {
 
     public function update($id)
 	{
+        check_access();
         $this->form_validation->set_rules($this->validate);
 
         if ($this->form_validation->run() == FALSE)
@@ -115,6 +118,7 @@ class Users extends Admin_controller  {
 
     public function delete()
     {
+        check_access();
         $this->form_validation->set_rules('id', 'id', 'required|numeric');
         
         if ($this->form_validation->run() == FALSE)

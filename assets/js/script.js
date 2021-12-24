@@ -108,6 +108,27 @@ if ($('input[name="success_msg"]').val() != '') {
     flash_msg("Success", $('input[name="success_msg"]').val(), "success");
 }
 
+$("#checkall").click(function() {
+    if (this.checked) {
+        $(".check_class").prop("checked", true);
+    } else {
+        $(".check_class").prop("checked", false);
+    }
+});
+
+$('#all-download').click(function() {
+    $('input[name="docs[]"]:checked').each(function() {
+        console.log(this.value);
+        var element = document.createElement('a');
+        element.setAttribute('href', this.value);
+        element.setAttribute('download', $(this).data('name'));
+        console.log(element)
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    });
+});
+
 function flash_msg(title, message, type) {
     $.notify({
         title: title,

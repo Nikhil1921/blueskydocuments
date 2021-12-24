@@ -75,3 +75,27 @@ if ( ! function_exists('check_ajax'))
             die;
     }
 }
+
+if ( ! function_exists('access'))
+{
+    function access()
+    {
+        return get_instance()->user->role === 'Admin' ? true : false;
+    }
+}
+
+if ( ! function_exists('check_access'))
+{
+    function check_access()
+    {
+        if (access()) {
+            return true;
+        }else{
+            $data['title'] = 'Error 404';
+            $data['name'] = 'Error 404';
+
+            echo get_instance()->template->load('template', 'error_404', $data, true);
+            exit;
+        }
+    }
+}

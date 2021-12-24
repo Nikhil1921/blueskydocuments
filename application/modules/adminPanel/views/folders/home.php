@@ -2,15 +2,17 @@
 <div class="card">
     <div class="card-header">
         <div class="row">
-            <div class="col-5">
+            <div class="col-<?= access() ? 5 : 10 ?>">
                 <h5><?= $title ?> <?= $operation ?></h5>
             </div>
+            <?php if(access()): ?>
             <div class="col-3">
                 <?= anchor("$url/upload/$parent_id", '<span class="fa fa-plus"></span> Add document', 'class="btn btn-outline-success btn-sm float-right"'); ?>
             </div>
             <div class="col-2">
                 <?= anchor("$url/add/$parent_id", '<span class="fa fa-plus"></span> Add folder', 'class="btn btn-outline-success btn-sm float-right"'); ?>
             </div>
+            <?php endif ?>
             <div class="col-2">
                 <?= anchor("$url/".e_id($back_id), '<span class="fa fa-back"></span> Go Back', 'class="btn btn-outline-primary btn-sm float-right"'); ?>
             </div>
@@ -49,12 +51,25 @@
 <?php endif ?>
 <div class="card">
     <div class="card-header">
-        <h5>Documents <?= $operation ?></h5>
+        <div class="row">
+            <div class="col-9">
+                <h5>Documents <?= $operation ?></h5>
+            </div>
+            <div class="col-3">
+                <?= form_button([
+                        'type'    => 'button',
+                        'class'   => 'btn btn-outline-primary btn-block',
+                        'id'      => 'all-download',
+                        'content' => 'Download Selected'
+                    ]); ?>
+            </div>
+        </div>
     </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="datatable table table-striped table-bordered nowrap">
                 <thead>
+                    <th class="target"><input type="checkbox" class="custom-checkbox" name="checkall" id="checkall"/></th>
                     <th class="target">Sr.</th>
                     <th>Title</th>
                     <th>Upload Date</th>

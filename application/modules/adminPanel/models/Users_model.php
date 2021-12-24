@@ -15,7 +15,7 @@ class Users_model extends MY_Model
 	{  
 		$this->db->select($this->select_column)
             	 ->from($this->table)
-                 ->where(['is_deleted' => 0, 'id != ' => $this->session->auth]);
+                 ->where(['is_deleted' => 0, 'role' => 'User', 'id != ' => $this->session->auth]);
 
         $this->datatable();
 	}
@@ -24,7 +24,7 @@ class Users_model extends MY_Model
 	{
 		$this->db->select('l.id')
 		         ->from($this->table)
-				 ->where(['is_deleted' => 0, 'id != ' => $this->session->auth]);
+				 ->where(['is_deleted' => 0, 'role' => 'User', 'id != ' => $this->session->auth]);
 		            	
 		return $this->db->get()->num_rows();
 	}

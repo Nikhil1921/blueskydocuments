@@ -30,6 +30,7 @@ class Folders extends Admin_controller  {
 
 	public function add(int $parent_id)
 	{
+        check_access();
         $this->form_validation->set_rules($this->validate);
 
         if ($this->form_validation->run() == FALSE)
@@ -54,6 +55,7 @@ class Folders extends Admin_controller  {
 
 	public function upload(int $parent_id)
 	{
+        check_access();
         $this->form_validation->set_rules($this->validate);
 
         if ($this->form_validation->run() == FALSE)
@@ -87,6 +89,7 @@ class Folders extends Admin_controller  {
 
 	public function update(int $id)
 	{
+        check_access();
         $this->form_validation->set_rules($this->validate);
 
         if ($this->form_validation->run() == FALSE)
@@ -133,6 +136,7 @@ class Folders extends Admin_controller  {
         foreach($fetch_data as $row)
         {  
             $sub_array = [];
+            $sub_array[] = '<input type="checkbox" class="check_class" data-name="'.$row->document_file.'" value="'.base_url($this->path.$row->document_file).'" name="docs[]" />';
             $sub_array[] = $sr;
             $sub_array[] = $row->title;
             $sub_array[] = date('d-m-Y h:i A',strtotime($row->created_at));
@@ -143,10 +147,12 @@ class Folders extends Admin_controller  {
             
             $action .= anchor($this->path.$row->document_file, '<i class="fa fa-eye"></i> View</a>', 'class="dropdown-item" target="_blank"');
             $action .= anchor($this->path.$row->document_file, '<i class="fa fa-download"></i> Download</a>', 'class="dropdown-item" download="download"');
-            $action .= anchor($this->redirect."/update/".e_id($row->id), '<i class="fa fa-edit"></i> Edit</a>', 'class="dropdown-item"');
-            $action .= form_open($this->redirect.'/document-delete', 'id="'.e_id($row->id).'"', ['id' => e_id($row->id)]).
-                '<a class="dropdown-item" onclick="script.delete('.e_id($row->id).'); return false;" href=""><i class="fa fa-trash"></i> Delete</a>'.
-                form_close();
+            if (access()) {
+                $action .= anchor($this->redirect."/update/".e_id($row->id), '<i class="fa fa-edit"></i> Edit</a>', 'class="dropdown-item"');
+                $action .= form_open($this->redirect.'/document-delete', 'id="'.e_id($row->id).'"', ['id' => e_id($row->id)]).
+                    '<a class="dropdown-item" onclick="script.delete('.e_id($row->id).'); return false;" href=""><i class="fa fa-trash"></i> Delete</a>'.
+                    form_close();
+            }
                 
             $sub_array[] = $action;
 
@@ -166,6 +172,7 @@ class Folders extends Admin_controller  {
 
     public function document_delete()
     {
+        check_access();
         $this->form_validation->set_rules('id', 'id', 'required|numeric');
         
         if ($this->form_validation->run() == FALSE)
