@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <?= form_label('Image', 'image', 'class="col-form-label"') ?>
+                        <?= form_label('Document', 'image', 'class="col-form-label"') ?>
                         <?= form_input([
                             'class' => "form-control",
                             'type' => "file",

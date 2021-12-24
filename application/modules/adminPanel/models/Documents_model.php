@@ -6,7 +6,7 @@
 class Documents_model extends MY_Model
 {
 	public $table = "documents d";
-	public $select_column = ['d.id', 'd.title', 'd.created_at', 'd.updated_at'];
+	public $select_column = ['d.id', 'd.title', 'd.created_at', 'd.updated_at', 'd.document_file'];
 	public $search_column = ['d.id', 'd.title', 'd.created_at', 'd.updated_at'];
     public $order_column = [null, 'd.title', 'd.created_at', 'd.updated_at', null];
 	public $order = ['d.id' => 'DESC'];

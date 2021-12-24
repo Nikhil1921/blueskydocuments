@@ -141,6 +141,8 @@ class Folders extends Admin_controller  {
             $action = '<div class="btn-group" role="group"><button class="btn btn-success dropdown-toggle" id="btnGroupVerticalDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="icon-settings"></span></button><div class="dropdown-menu" aria-labelledby="btnGroupVerticalDrop1" x-placement="bottom-start">';
             
+            $action .= anchor($this->path.$row->document_file, '<i class="fa fa-eye"></i> View</a>', 'class="dropdown-item" target="_blank"');
+            $action .= anchor($this->path.$row->document_file, '<i class="fa fa-download"></i> Download</a>', 'class="dropdown-item" download="download"');
             $action .= anchor($this->redirect."/update/".e_id($row->id), '<i class="fa fa-edit"></i> Edit</a>', 'class="dropdown-item"');
             $action .= form_open($this->redirect.'/document-delete', 'id="'.e_id($row->id).'"', ['id' => e_id($row->id)]).
                 '<a class="dropdown-item" onclick="script.delete('.e_id($row->id).'); return false;" href=""><i class="fa fa-trash"></i> Delete</a>'.
