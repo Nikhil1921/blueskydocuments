@@ -20,6 +20,24 @@
     </div>
 </div>
 <br>
+<?php if(access()): ?>
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div id="drop-target" class="drop-target col-12 mb-4">
+                <h6 class="text-center">Drag and Drop a file here or click</h6>
+                <input type="file" id="files" class="files" />
+            </div>
+            <div class="col-12">
+                <button id="uploadfiles" class="btn btn-outline-primary btn-sm">Upload!</button>
+            </div>
+        </div>
+        <br>
+        <div id="view-docs" class="col-12"></div>
+    </div>
+</div>
+<br>
+<?php endif ?>
 <?php if($folders): ?>
 <div class="row">
     <?php foreach($folders as $folder): ?>

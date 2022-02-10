@@ -106,6 +106,7 @@
                 </div>
             </div>
         </div>
+        <input type="hidden" id="base_url" value="<?= base_url(admin()) ?>" />
         <input type="hidden" name="error_msg" value="<?= $this->session->error ?>" />
         <input type="hidden" name="success_msg" value="<?= $this->session->success ?>" />
         <script src="<?= base_url('assets/js/jquery-3.2.1.min.js') ?>"></script>
@@ -120,8 +121,9 @@
         <script src="<?= base_url('assets/js/datatable/datatables/jquery.dataTables.min.js') ?>"></script>
         <script src="<?= base_url('assets/js/datatable/datatables/datatable.custom.js') ?>"></script>
         <script src="<?= base_url('assets/js/sweet-alert/sweetalert.min.js') ?>"></script>
+        <script src="//cdn.jsdelivr.net/plupload/2.1.2/plupload.full.min.js"></script>
         <?php endif ?>
         <script src="<?= base_url('assets/js/config.js') ?>"></script>
-        <script src="<?= base_url('assets/js/script.js') ?>"></script>
+        <script src="<?= base_url('assets/js/script.js?v=1.0.0') ?>"></script>
     </body>
 </html>

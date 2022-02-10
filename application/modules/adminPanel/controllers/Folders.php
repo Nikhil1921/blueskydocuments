@@ -202,6 +202,49 @@ class Folders extends Admin_controller  {
         flashMsg($response['status'], $response['message'], $response['message'], $this->redirect);
     }
 
+    public function upload_documents()
+    {
+        $image = $this->uploadImage('file');
+        if ($image['error'] == TRUE)
+            $response = $image;
+        else{
+            $relativePath = explode('/', substr_replace($this->input->post('relativePath') ,"", -1));
+            $parent_id = d_id($this->input->post('folder_id'));
+
+            foreach ($relativePath as $k => $path) {
+                if ($k != 0) {
+                    $parent_id = $this->main->check($this->table, ['title' => $relativePath[$k-1], 'parent_id' => $parent_id, 'is_deleted' => 0], 'id');
+                }
+                $folder_id = $this->main->check($this->table, ['title' => $path, 'parent_id' => $parent_id, 'is_deleted' => 0], 'id');
+                $folder_id = $folder_id ? $folder_id : $this->main->add(['title' => $path, 'parent_id' => $parent_id], $this->table);
+            }
+
+            $title = explode('.', $this->input->post('name'));
+
+            $post = [
+                'title'         => reset($title),
+                'description'   => "NA",
+                'document_file' => $image['message'],
+                'created_by'	=> $this->session->auth,
+                'created_at'	=> date('Y-m-d H:i:s'),
+                'folder_id'     => $folder_id
+            ];
+
+            if ($this->main->add($post, 'documents'))
+                $response = [
+                    'message' => "Document uploaded.",
+                    'status' => true
+                ];
+            else
+                $response = [
+                    'message' => "Document not uploaded.",
+                    'status' => false
+                ];
+        }
+
+        die(json_encode($response));
+    }
+
 	protected $validate = [
         [
             'field' => 'title',

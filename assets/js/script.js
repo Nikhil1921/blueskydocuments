@@ -190,4 +190,90 @@ var script = {
 
             }); */
     }
+
 };
+
+if ($('.drop-target').length > 0) {
+
+    var uploader, traverseFileTree, map = {};
+
+    // replace by your plupload setup, this is just an example
+    uploader = new plupload.Uploader({
+        runtimes: 'html5',
+        container: 'drop-target',
+        drop_element: 'drop-target',
+        browse_button: 'files',
+        url: `${$('#base_url').val()}folders/upload-documents`,
+        filters: {
+            mime_types: [
+                { title: "Image files", extensions: "jpg,jpeg,png,pdf" }
+            ]
+        },
+        init: {
+            PostInit: function() {
+                document.getElementById('uploadfiles').onclick = function() {
+                    uploader.start();
+                    return false;
+                };
+            },
+            BeforeUpload: function(up, file) {
+                // send relativePath along
+                if (map[file.name] !== undefined) {
+                    var relativePath = map[file.name].shift();
+                    up.setOption('multipart_params', {
+                        relativePath: relativePath,
+                        folder_id: $('input[name=folder_id]').val()
+                    });
+                    var remove = relativePath + file.name;
+                    $('#' + remove.replaceAll(' ', '_').replace(/[&\/\\#, +()$~%.'":*?<>{}-]/g, '_')).remove();
+                }
+            }
+        }
+    });
+
+    uploader.init();
+
+    // all relative paths are built here
+    traverseFileTree = function(item, path) {
+        var dirReader = null;
+        path = path || '';
+        if (item.isFile) {
+            item.file(function(file) {
+                // careful here, could be several files of the same name
+                // we assume files will be in the same order here than in plupload
+                if (map[file.name] === undefined) {
+                    map[file.name] = [];
+                }
+                map[file.name].push(path);
+                const fileReader = new FileReader();
+                fileReader.readAsDataURL(file);
+                fileReader.addEventListener("load", function() {
+                    var remove = path + file.name;
+                    $('#view-docs').append(`<img class="col-3" id="${(remove).replaceAll(' ', '_').replace(/[&\/\\#, +()$~%.'":*?<>{}-]/g, '_')}" src="${this.result}" />`);
+                });
+            });
+        } else if (item.isDirectory) {
+            dirReader = item.createReader();
+            dirReader.readEntries(function(entries) {
+                var n = 0;
+                for (n = 0; n < entries.length; n++) {
+                    traverseFileTree(entries[n], path + item.name + "/");
+                }
+            });
+        }
+    };
+
+    // bind another handler to the drop event to build an object representing the folder structure
+    document.getElementById('drop-target').addEventListener('drop', function(e) {
+        $('#view-docs').html('');
+        var items = e.dataTransfer.items,
+            n, item;
+
+        for (n = 0; n < items.length; n++) {
+            item = items[n].webkitGetAsEntry();
+            if (item) {
+                traverseFileTree(item);
+            }
+        }
+    }, false);
+}
