@@ -20,7 +20,7 @@ class Admin_controller extends MY_Controller
         $this->load->library('upload');
         $config = [
                 'upload_path'      => $this->path,
-                'allowed_types'    => 'jpg|jpeg|png|pdf',
+                'allowed_types'    => '*',
                 'file_name'        => time(),
                 'file_ext_tolower' => TRUE
             ];

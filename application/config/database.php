@@ -4,16 +4,16 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 switch ($_SERVER['SERVER_NAME']) {
-    case 'www.bluesky.com':
-    case 'bluesky.com':
-    case 'https://www.bluesky.com':
-    case 'https://bluesky.com':
+    case 'www.34.125.84.238':
+    case '34.125.84.238':
+    case 'https://www.34.125.84.238':
+    case 'https://34.125.84.238':
         $db['default'] = array(
             'dsn'   => '',
             'hostname' => 'localhost',
-            'username' => 'carefajd_cft',
-            'password' => '(+TF?d.wOluY',
-            'database' => 'carefajd_cft',
+            'username' => 'bluesky_docs',
+            'password' => 'Densetek@2018',
+            'database' => 'bluesky_docs',
             'dbdriver' => 'mysqli',
             'dbprefix' => '',
             'pconnect' => (ENVIRONMENT !== 'production'),
